@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="SAEExplainer translates sparse autoencoder features into faithful natural-language explanations through activation-guided preference optimization. EMNLP 2026.">
+  <meta name="theme-color" content="#275c50">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="SAEExplainer | EMNLP 2026">
+  <meta property="og:description" content="Interpreting SAE Features with Activation-Guided Preference Optimization">
+  <title>SAEExplainer · EMNLP 2026</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#overview">Skip to content</a>
+  <nav class="nav" aria-label="Main navigation">
+    <a class="wordmark" href="#">SAE<span>Explainer</span><span class="wordmark-dot">.</span></a>
+    <div><a href="#method">Method</a><a href="#results">Results</a><a href="#citation">Citation</a></div>
+  </nav>
+  <main>
+    <header class="hero">
+      <p class="venue"><span></span> EMNLP 2026</p>
+      <h1><span class="project-name">SAEExplainer</span><span class="paper-title">Interpreting SAE Features with<br class="desktop-break"> Activation-Guided Preference Optimization</span></h1>
+      <div class="authors">
+        <span>Jingyi He<sup>1,2</sup></span><span>Haiyan Zhao<sup>3</sup></span><span>Ruxue Shi<sup>4</sup></span><span>Yanguang Liu<sup>3</sup></span><span>Xin Wang<sup>4</sup></span><span>Fei Sun<sup>5</sup></span><span>Mengnan Du<sup>1,†</sup></span>
+      </div>
+      <div class="affiliations"><span><sup>1</sup> The Chinese University of Hong Kong, Shenzhen</span><span><sup>2</sup> Shanghai Jiao Tong University</span><span><sup>3</sup> NJIT</span><span><sup>4</sup> Jilin University</span><span><sup>5</sup> Institute of Computing Technology, CAS</span></div>
+      <p class="corresponding">† Corresponding author</p>
+      <div class="resources">
+        <a class="button primary" href="1066_SAEExplainer_Interpreting.pdf"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8zM14 3v6h5M9 13h6M9 17h6"/></svg> Read the paper</a>
+        <a class="button" href="https://github.com/he-jingyi/SAEExplainer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 7-5 5 5 5m8-10 5 5-5 5m-3-12-2 20"/></svg> Code</a>
+        <a class="button" href="#citation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 7H4v6h6V7ZM20 7h-6v6h6V7ZM10 13c0 4-2 5-4 5m14-5c0 4-2 5-4 5"/></svg> BibTeX</a>
+      </div>
+    </header>
+
+    <section class="intro section" id="overview" aria-labelledby="overview-title">
+      <p class="eyebrow">FROM ACTIVATIONS TO EXPLANATIONS</p>
+      <h2 id="overview-title">An explanation should activate<br class="desktop-break"> the feature it describes.</h2>
+      <p class="lead">SAEExplainer turns a model’s own activation feedback into a learning signal—teaching an explainer to verify, correct, and refine its descriptions of sparse autoencoder features.</p>
+      <figure class="framework"><a href="assets/framework.webp" aria-label="View the full-size SAEExplainer framework"><img src="assets/framework.webp" width="1816" height="1024" alt="SAEExplainer framework: an SAE feature vector is injected into the explainer; SFT initializes the model, candidate explanations are scored by target-model activations, and preference pairs drive two rounds of DPO."></a><figcaption><strong>The SAEExplainer framework.</strong> Decode feature vectors into language, score candidate explanations with real activations, and improve the explainer through iterative preference optimization.</figcaption></figure>
+    </section>
+
+    <section class="abstract-band" aria-labelledby="abstract-title"><div class="section narrow">
+      <h2 id="abstract-title">Abstract</h2>
+      <p>Although Sparse Autoencoders (SAEs) have mitigated the opacity of large language models (LLMs) by decomposing dense representations into sparse features, explaining these features still remains a central challenge. Current explanation methods, however, typically operate within an open-loop paradigm, failing to leverage mechanistic feedback for further refinement. In this paper, we propose <strong>SAEExplainer</strong>, a training framework that utilizes activation scores as an objective reward signal to train the model for self-correction and iterative bootstrapping. By iteratively verifying and correcting foundational explanations through a two-round optimization process, SAEExplainer achieves continuous improvement in its explanatory capabilities. This mechanism significantly reduces explanation hallucinations and reinforces causal triggering patterns. Extensive experiments demonstrate our approach improves upon established baselines across most metrics, especially in causal triggering and discriminative activation.</p>
+    </div></section>
+
+    <section class="section" id="method" aria-labelledby="method-title">
+      <p class="eyebrow">THE METHOD</p><h2 id="method-title">Explain. Verify. Refine.</h2>
+      <p class="section-intro">A closed loop connects natural-language explanations to the target model’s mechanistic response.</p>
+      <div class="steps">
+        <article><span class="step-number">01</span><h3>Learn to explain</h3><p>Inject the SAE feature vector into the explainer’s residual stream. Supervised fine-tuning on Neuronpedia explanations establishes a foundation for decoding features into language.</p><span class="step-tag">SFT warm-up</span></article>
+        <article><span class="step-number">02</span><h3>Verify with activations</h3><p>Generate candidate explanations and synthesize texts from each one. Score these texts using the target feature’s activation, pairing strong candidates with challenging negatives.</p><span class="step-tag">Mechanistic preferences</span></article>
+        <article><span class="step-number">03</span><h3>Refine the explainer</h3><p>Train with Direct Preference Optimization, then use the improved explainer to build a new preference dataset. A second round further sharpens explanation faithfulness.</p><span class="step-tag">Two rounds of DPO</span></article>
+      </div>
+    </section>
+
+    <section class="section results" id="results" aria-labelledby="results-title">
+      <p class="eyebrow">EXPERIMENTS</p><h2 id="results-title">More faithful. More specific.</h2>
+      <p class="section-intro">Evaluated on held-out features from Gemma-2-9B, Llama-3.1-8B, and Gemma-2-27B.</p>
+      <div class="highlights">
+        <div><strong>6 / 6</strong><span>Best generative accuracy</span><small>Across all model–layer settings in Table 1</small></div>
+        <div><strong>+9.26 <em>pp</em></strong><span>Generative accuracy gain</span><small>Gemma-2-27B, Layer 1, vs. strongest baseline</small></div>
+        <div><strong>76.5<em>%</em></strong><span>Fewer semantic collisions</span><small>Relative FSSR reduction vs. Neuronpedia</small></div>
+      </div>
+      <div class="table-heading"><h3>Generative accuracy (%)</h3><span>Higher is better ↑</span></div>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Generative accuracy comparison; scroll horizontally on smaller screens">
+      <table><caption class="sr-only">Generative accuracy from Table 1 of the paper, across three target models and two evaluated layers each.</caption><thead><tr><th rowspan="2" scope="col">Method</th><th colspan="2" scope="colgroup">Gemma-2-9B</th><th colspan="2" scope="colgroup">Llama-3.1-8B</th><th colspan="2" scope="colgroup">Gemma-2-27B</th></tr><tr><th scope="col">Layer 1</th><th scope="col">Layer 2</th><th scope="col">Layer 1</th><th scope="col">Layer 2</th><th scope="col">Layer 1</th><th scope="col">Layer 2</th></tr></thead><tbody>
+      <tr><th scope="row">Activation Oracles</th><td>20.33</td><td>26.97</td><td>31.17</td><td>21.77</td><td>29.67</td><td>10.23</td></tr>
+      <tr><th scope="row">Neuronpedia</th><td>21.03</td><td>27.77</td><td>33.93</td><td>27.87</td><td>37.63</td><td>16.17</td></tr>
+      <tr><th scope="row">Neuronpedia w/ Claude</th><td>40.00</td><td>49.43</td><td>55.67</td><td>49.67</td><td>44.37</td><td>18.80</td></tr>
+      <tr><th scope="row">Neuronpedia w/ GPT-5</th><td>38.87</td><td>49.33</td><td>54.47</td><td>46.70</td><td>35.27</td><td>18.60</td></tr>
+      <tr class="ours"><th scope="row">SAEExplainer <span>Ours</span></th><td>46.13</td><td>54.50</td><td>58.40</td><td>52.33</td><td>53.63</td><td>26.63</td></tr>
+      </tbody></table></div>
+      <p class="table-note">“Layer 1” and “Layer 2” label the two selected evaluation layers for each model, following Table 1; they are not Transformer layer indices. See the paper for the full set of metrics and experimental settings.</p>
+    </section>
+
+    <section class="section case-section" aria-labelledby="case-title">
+      <p class="eyebrow">A CLOSER LOOK</p><h2 id="case-title">From a broad topic to a precise trigger.</h2>
+      <p class="section-intro">Gemma-2-9B · Layer 31 · Feature 1943. A case study from Table 2.</p>
+      <div class="case-grid">
+        <article class="case baseline"><div class="case-top"><h3>Neuronpedia</h3><span>Baseline</span></div><p class="small-label">EXPLANATION</p><blockquote>“coding syntax and elements related to web development or programming instructions”</blockquote><p class="small-label">GENERATED TEXT</p><p class="sample">In the HTML template, wrap the button inside a div, then add class="primary" and set aria-label for accessibility.</p><div class="activation"><span>Feature activation</span><strong>0</strong></div></article>
+        <article class="case improved"><div class="case-top"><h3>SAEExplainer</h3><span>Ours</span></div><p class="small-label">EXPLANATION <span>(ABRIDGED)</span></p><blockquote>References to the <mark>Dart programming language</mark>, dart:core, package:flutter/foundation.dart, the Zone class, async, and Future.</blockquote><p class="small-label">GENERATED TEXT</p><p class="sample">A comment in <mark>package:flutter/foundation.dart</mark> pointed to <mark>dart:core Zone</mark> behavior when an <mark>async Future</mark> was scheduled and later resolved.</p><div class="activation"><span>Feature activation</span><strong>135.54</strong></div></article>
+      </div>
+      <p class="table-note">Activation values are specific to this feature and generated text; they are not percentages or aggregate benchmark scores.</p>
+    </section>
+
+    <section class="section citation" id="citation" aria-labelledby="citation-title"><div class="citation-heading"><div><p class="eyebrow">REFERENCE</p><h2 id="citation-title">Citation</h2></div><button class="copy-button" id="copy-citation" type="button">Copy BibTeX</button></div>
+      <pre><code id="bibtex">@inproceedings{he2026saeexplainer,
+  title     = {{SAEExplainer}: Interpreting {SAE} Features with
+               Activation-Guided Preference Optimization},
+  author    = {He, Jingyi and Zhao, Haiyan and Shi, Ruxue and
+               Liu, Yanguang and Wang, Xin and Sun, Fei and Du, Mengnan},
+  booktitle = {Proceedings of the 2026 Conference on Empirical Methods
+               in Natural Language Processing},
+  year      = {2026}
+}</code></pre><p id="copy-status" class="copy-status" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+  <footer><span>SAEExplainer · EMNLP 2026</span><a href="mailto:mengnandu@cuhk.edu.cn">Contact</a><a href="https://github.com/he-jingyi/SAEExplainer">GitHub ↗</a></footer>
+</body>
+</html>
