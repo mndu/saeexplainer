@@ -2,6 +2,9 @@
 
 A lightweight, responsive research project website for **SAEExplainer: Interpreting SAE Features with Activation-Guided Preference Optimization**.
 
+- Website: https://mndu.github.io/saeexplainer/
+- Website repository: https://github.com/mndu/saeexplainer
+
 ## Preview
 
 Run `python3 -m http.server 8000` from this directory, then open http://localhost:8000.
@@ -19,6 +22,8 @@ No build step or package installation is required.
 ## Deployment
 
 Publish this directory to a GitHub repository. In **Settings → Pages**, choose **Deploy from a branch**, branch **main**, folder **/ (root)**. Save and wait for the Pages deployment to finish.
+
+This repository is configured to publish `main` from the root. Future updates only require committing and pushing the changed files; GitHub Pages redeploys automatically.
 
 ## Content sources
 
