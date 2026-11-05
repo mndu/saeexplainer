@@ -14,6 +14,7 @@
   <title>SAEExplainer · EMNLP 2026</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="paper.css">
   <script src="script.js" defer></script>
 </head>
 <body>
@@ -35,7 +36,7 @@
 
     <section class="intro section" id="overview" aria-labelledby="overview-title">
       <p class="eyebrow">FROM ACTIVATIONS TO EXPLANATIONS</p>
-      <h2 id="overview-title">An explanation should activate<br class="desktop-break"> the feature it describes.</h2>
+      <h2 id="overview-title">Overview</h2>
       <p class="lead">SAEExplainer turns a model’s own activation feedback into a learning signal—teaching an explainer to verify, correct, and refine its descriptions of sparse autoencoder features.</p>
       <figure class="framework"><a href="assets/framework.webp" aria-label="View the full-size SAEExplainer framework"><img src="assets/framework.webp" width="1816" height="1024" alt="SAEExplainer framework: an SAE feature vector is injected into the explainer; SFT initializes the model, candidate explanations are scored by target-model activations, and preference pairs drive two rounds of DPO."></a><figcaption><strong>The SAEExplainer framework.</strong> Decode feature vectors into language, score candidate explanations with real activations, and improve the explainer through iterative preference optimization.</figcaption></figure>
     </section>
@@ -46,7 +47,7 @@
     </div></section>
 
     <section class="section" id="method" aria-labelledby="method-title">
-      <p class="eyebrow">THE METHOD</p><h2 id="method-title">Explain. Verify. Refine.</h2>
+      <p class="eyebrow">THE METHOD</p><h2 id="method-title">SAEExplainer Method</h2>
       <p class="section-intro">A closed loop connects natural-language explanations to the target model’s mechanistic response.</p>
       <div class="steps">
         <article><span class="step-number">01</span><h3>Learn to explain</h3><p>Inject the SAE feature vector into the explainer’s residual stream. Supervised fine-tuning on Neuronpedia explanations establishes a foundation for decoding features into language.</p><span class="step-tag">SFT warm-up</span></article>
@@ -56,7 +57,7 @@
     </section>
 
     <section class="section results" id="results" aria-labelledby="results-title">
-      <p class="eyebrow">EXPERIMENTS</p><h2 id="results-title">More faithful. More specific.</h2>
+      <p class="eyebrow">EXPERIMENTS</p><h2 id="results-title">Experimental Results</h2>
       <p class="section-intro">Evaluated on held-out features from Gemma-2-9B, Llama-3.1-8B, and Gemma-2-27B.</p>
       <div class="highlights">
         <div><strong>6 / 6</strong><span>Best generative accuracy</span><small>Across all model–layer settings in Table 1</small></div>
@@ -76,7 +77,7 @@
     </section>
 
     <section class="section case-section" aria-labelledby="case-title">
-      <p class="eyebrow">A CLOSER LOOK</p><h2 id="case-title">From a broad topic to a precise trigger.</h2>
+      <p class="eyebrow">A CLOSER LOOK</p><h2 id="case-title">Qualitative Example</h2>
       <p class="section-intro">Gemma-2-9B · Layer 31 · Feature 1943. A case study from Table 2.</p>
       <div class="case-grid">
         <article class="case baseline"><div class="case-top"><h3>Neuronpedia</h3><span>Baseline</span></div><p class="small-label">EXPLANATION</p><blockquote>“coding syntax and elements related to web development or programming instructions”</blockquote><p class="small-label">GENERATED TEXT</p><p class="sample">In the HTML template, wrap the button inside a div, then add class="primary" and set aria-label for accessibility.</p><div class="activation"><span>Feature activation</span><strong>0</strong></div></article>
