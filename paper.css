@@ -9,3 +9,40 @@ main{max-width:980px;margin:auto}.hero{max-width:none;padding:62px 24px 28px;tex
 .paper-title{font-size:22px;font-weight:400;line-height:1.35}
 .case,.case.improved,.case.baseline{background:#fff;border:0;border-top:1px solid #ddd;border-radius:0;padding:14px 0}
 @media(max-width:760px){.project-name{font-size:26px}.paper-title{font-size:20px}}
+
+
+/* Slightly larger type for reading the project pages. */
+body{font-size:17px}
+h2{font-size:27px}
+h3,.steps h3{font-size:18px}
+.authors{font-size:17px}
+.affiliations{font-size:15px}
+.corresponding{font-size:13px}
+.button,.button.primary{font-size:17px}
+.lead,.section-intro,.abstract-band p{font-size:17px}
+.steps p{font-size:15px}
+.framework figcaption,.table-note,.insight-grid p{font-size:14px}
+.category-grid span{font-size:15px}
+.highlights span{font-size:14px}
+.highlights small{font-size:13px}
+table{font-size:14px}
+.case blockquote,.case .sample{font-size:16px}
+pre{font-size:13px}
+footer{font-size:14px}
+@media(max-width:760px){
+  body{font-size:16px}
+  h2{font-size:24px}
+  .authors{font-size:16px}
+  .affiliations{font-size:14px}
+  .lead,.section-intro,.abstract-band p{font-size:16px}
+  table{font-size:13px}
+}
+@media(max-width:520px){
+  .authors{font-size:15px}
+  .affiliations{font-size:13px}
+  .button,.button.primary{font-size:15px}
+  pre{font-size:11px}
+}
+.project-name{font-size:35px}
+.paper-title{font-size:24px}
+@media(max-width:760px){.project-name{font-size:29px}.paper-title{font-size:22px}}
